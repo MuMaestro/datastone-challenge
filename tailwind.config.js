@@ -23,7 +23,21 @@ export default {
 					'950': 'hsl(209, 58%, 16%)',
 				},
 			},
-			spacing: {}
+			spacing: {},
+			keyframes: {
+				overlayShow: {
+					from: { opacity: 0 },
+					to: { opacity: 1 },
+				},
+				contentShow: {
+					from: { opacity: 0 },
+					to: { opacity: 1 },
+				},
+			},
+			animation: {
+				overlayShow: 'overlayShow 250ms cubic-bezier(0.16, 1, 0.3, 1)',
+				contentShow: 'contentShow 250ms cubic-bezier(0.16, 1, 0.3, 1)',
+			},
 		},
 	},
 	plugins: [],
