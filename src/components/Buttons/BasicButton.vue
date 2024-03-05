@@ -10,7 +10,6 @@ const { iconMode } = defineProps({
 </template>
 <style scoped>
 .button {
-	all: unset;
 	@apply px-3 py-2 flex items-center justify-center gap-2 rounded overflow-hidden bg-matisse-50 text-matisse-850 hover:bg-matisse-200 hover:text-matisse-900
 }
 .button.iconMode {
