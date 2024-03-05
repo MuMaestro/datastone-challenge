@@ -5,7 +5,7 @@ const { iconMode } = defineProps({
 </script>
 <template>
 	<button class="button" :class="{ iconMode }">
-		<slot>aaa</slot>
+		<slot />
 	</button>
 </template>
 <style scoped>
