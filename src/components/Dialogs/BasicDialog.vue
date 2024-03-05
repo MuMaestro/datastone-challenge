@@ -14,14 +14,17 @@ import GoogleIcon from '../Icons/GoogleIcon.vue';
 <template>
 	<DialogRoot>
 		<DialogTrigger as-child>
-			<BasicButton>
-				<slot />
-			</BasicButton>
+			<slot >
+				<BasicButton>
+					<slot name="texto-trigger" />
+				</BasicButton>
+			</slot>
 		</DialogTrigger>
 		<DialogPortal>
 			<DialogOverlay class="basic-dialog-overlay" />
 			<DialogContent
 				class="basic-dialog-content-wrapper"
+				v-bind:class="$attrs.class"
 			>
 				<div class="basic-dialog-content-box">
 					<slot name="content"/> 
@@ -48,6 +51,6 @@ import GoogleIcon from '../Icons/GoogleIcon.vue';
 	@apply fixed z-[100] inset-0 flex items-center justify-center data-[state=open]:animate-contentShow focus:outline-none
 }
 .basic-dialog-content-box {
-	@apply relative h-[500px] max-h-[85vh] w-[90vw] max-w-[550px] rounded px-9 py-11 bg-matisse-50 shadow-matisse-950/30
+	@apply relative h-[500px] w-[90vw] max-w-[550px] rounded px-9 py-11 bg-matisse-50 shadow-matisse-950/30
 }
 </style>
