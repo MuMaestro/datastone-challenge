@@ -1,17 +1,19 @@
 <script setup lang="ts">
 import { defineModel } from 'vue';
-
+const { id } = defineProps({
+	id: { type: String }
+})
 const [valueModel] = defineModel({
 	required: true,
 });
 </script>
 <template>
-	<div class="input-wrapper">
-		<span class="input-label">
+	<fieldset class="input-wrapper">
+		<label class="input-label" :for="id">
 			<slot></slot>
-		</span>
-		<input v-model="valueModel" v-bind="{...$attrs}" />
-	</div>
+		</label>
+		<input v-model="valueModel" :id="id" v-bind="{...$attrs}" />
+	</fieldset>
 </template>
 <style scoped>
 .input-wrapper {
