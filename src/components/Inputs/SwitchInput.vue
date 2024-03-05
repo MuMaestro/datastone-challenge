@@ -2,10 +2,10 @@
 import { SwitchRoot, SwitchThumb } from 'radix-vue';
 
 const { id } = defineProps({
-  id: { type: String, required: true },
+  id: { type: String },
 });
 
-const [switchState] = defineModel<boolean>({
+const [switchState] = defineModel<boolean | undefined>({
 	required: true,
 });
 </script>
@@ -35,7 +35,7 @@ const [switchState] = defineModel<boolean>({
 	@apply w-[42px] h-[25px] data-[state=checked]:bg-matisse-950 bg-matisse-950/50 rounded-full outline-matisse-950 focus-within:outline focus-within:outline-matisse-950 flex relative cursor-default
 }
 .switch-wrapper .switch-wrapper-root .switch-wrapper-thumb {
-	@apply block w-[21px] h-[21px] my-auto bg-matisse-50 shadow-sm rounded-full transition-transform duration-100 translate-x-0.5 will-change-transform data-[state=checked]:translate-x-[19px]
+	@apply block w-[18px] h-[18px] my-auto bg-matisse-50 shadow-sm rounded-full transition-transform duration-100 will-change-transform translate-x-[4px] data-[state=checked]:translate-x-[20px]
 }
 
 
