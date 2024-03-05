@@ -51,6 +51,6 @@ import GoogleIcon from '../Icons/GoogleIcon.vue';
 	@apply fixed z-[100] inset-0 flex items-center justify-center data-[state=open]:animate-contentShow focus:outline-none
 }
 .basic-dialog-content-box {
-	@apply relative h-[500px] w-[90vw] max-w-[550px] rounded px-9 py-11 bg-matisse-50 shadow-matisse-950/30
+	@apply relative flex flex-col w-[90vw] max-w-[550px] rounded px-9 py-11 bg-matisse-50 shadow-matisse-950/30
 }
 </style>
