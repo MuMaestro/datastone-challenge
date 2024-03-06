@@ -6,10 +6,9 @@ import TextInput from '@/components/Inputs/TextInput.vue';
 import { useUserStore } from '@/stores/user';
 import { toTypedSchema } from '@vee-validate/zod';
 import { cnpj, cpf } from 'cpf-cnpj-validator';
+import { isEqual } from 'lodash';
 import validator from 'validator';
 import { useForm } from 'vee-validate';
-import { computed } from 'vue';
-import { isEqual } from 'lodash'
 import { z } from 'zod';
 const UserSchema = z.object({
 	name: z.string({ required_error: 'Nome não pode estar vazio' }).min(3, { message: 'Minimo de 3 caracteres'}),
@@ -26,9 +25,9 @@ const userStore = useUserStore();
 
 const [userModel] = defineModel<User>({
 	default: {
-		active: false,
+		active: true,
 		document: '',
-		email: '',
+		email: 'murilomaestro@gmail.com',
 		name: 'Murilo Maestro',
 		telephone: '',
 	}
@@ -36,7 +35,7 @@ const [userModel] = defineModel<User>({
 
 const { handleSubmit, errors, defineField, isFieldDirty, values } = useForm({
 	validationSchema: toTypedSchema(UserSchema),
-	initialValues: {...userModel.value}
+	initialValues: userModel.value,
 })
 const [active, activeAttrs] = defineField('active');
 const [document, documentAttrs] = defineField('document');
@@ -51,9 +50,11 @@ const onSubmit = handleSubmit((values) => {
 </script>
 <template>
 	<BasicDialog>
-		<BasicButton class="w-[max-content] !bg-matisse-700 !text-matisse-50">
-			criar usuário
-		</BasicButton>
+		<slot>
+			<BasicButton class="w-[max-content] !bg-matisse-700 !text-matisse-50">
+				criar usuário
+			</BasicButton>
+		</slot>
 		<template v-slot:content>
 			<form :onsubmit="onSubmit" class="flex flex-col gap-4">
 				<TextInput v-model="name" v-bind="activeAttrs">
