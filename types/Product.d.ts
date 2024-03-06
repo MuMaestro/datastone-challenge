@@ -1,4 +1,4 @@
 type Product = {
 	name: string;
-	active: Boolean;
+	active?: boolean;
 }
