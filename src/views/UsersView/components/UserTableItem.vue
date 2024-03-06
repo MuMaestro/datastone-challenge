@@ -23,18 +23,18 @@ function handleDeleteUser() {
 }
 </script>
 <template>
-	<div class="grid grid-cols-[160px_1fr_140px_120px_110px_88px] grid-rows-[40px] items-center justify-center gap-2 px-4 py-3 rounded bg-gray-100">
-		<div class="flex flex-col gap-0.5">
+	<div class="user-table-item">
+		<div class="flex flex-col gap-0.5 [grid-area:nome] sm:[grid-area:unset]">
 			<span class="leading-none text-matisse-950 w-full truncate ">{{ user?.name.split(' ')?.[0] }}</span>
 			<span class="leading-none text-matisse-400 text-sm w-full truncate">{{ user?.name.split(' ')?.slice(1).reduce((a, n) => `${a} ${n}`, '') }}</span>
 		</div>
-		<div class="w-full truncate">{{ user?.email }}</div>
-		<div class="flex flex-col gap-0.5">
+		<div class="w-full truncate [grid-area:email] sm:[grid-area:unset]">{{ user?.email }}</div>
+		<div class="flex flex-col gap-0.5 [grid-area:doc] sm:[grid-area:unset]">
 			<span class="leading-none text-matisse-950">{{ documentProcessed }}</span>
 			<span class="leading-none text-matisse-400 text-sm">{{ user.document ? cpf.isValid(user.document) ? 'cpf' : 'cnpj' : '' }}</span>
 		</div>
 		<div class="flex gap-2">
-			<div class="flex flex-col gap-0.5">
+			<div class="flex flex-col gap-0.5 [grid-area:produtos] sm:[grid-area:unset]">
 				<span class="leading-none text-matisse-950">{{ relations.ofUser(user.email).length ?? 0 }}</span>
 				<span class="leading-none text-matisse-400 text-sm">produtos</span>
 			</div>
@@ -44,14 +44,14 @@ function handleDeleteUser() {
 				</BasicButton>
 			</CreateOrUpdateUserRelationDialog>
 		</div>
-		<div class="flex gap-1 items-center">
+		<div class="flex gap-1 items-center [grid-area:status] sm:[grid-area:unset]">
 			<div class="flex justify-center align-center p-1 rounded-full" :class="user.active ? 'bg-matisse-100' : 'bg-red-100'">
 				<GoogleIcon :size="20" :outlined="user.active" :class="user.active?'!text-matisse-800':'!text-red-500'">{{ user.active ? 'lock_open' : 'lock'}}</GoogleIcon>
 			</div>
 			<span class="text-matisse-950 text-base">{{user.active ? 'Ativo' : 'Desativado '}}</span>
 
 		</div>
-		<div class="flex gap-2 justify-end">
+		<div class="flex gap-2 justify-end [grid-area:acoes] sm:[grid-area:unset]">
 			<CreateOrUpdateUserDialogTrigger v-model="userMutable">
 				<BasicButton icon-mode class="!p-2 !bg-matisse-600" >
 					<GoogleIcon outlined :size="20" class="!text-matisse-100">edit</GoogleIcon>
@@ -63,3 +63,15 @@ function handleDeleteUser() {
 		</div>
 	</div>
 </template>
+<style scoped>
+.user-table-item {
+	grid-template: 
+			"nome nome doc" 40px
+			"email email email" 40px
+			"produtos status acoes" 40px / 1fr 1fr 120px;
+	@apply 
+		grid 
+		sm:[grid-template:40px/160px_1fr_140px_120px_110px_88px] 
+		items-center justify-center gap-2 px-4 py-3 rounded bg-gray-100
+}
+</style>

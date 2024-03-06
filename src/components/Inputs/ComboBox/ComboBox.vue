@@ -25,7 +25,7 @@ const [value] = defineModel<string[]>()
     </ComboboxAnchor>
 
     <ComboboxContent class="combobox-content">
-      <ComboboxViewport class="p-2">
+      <ComboboxViewport class="p-2 max-h-[--radix-popper-available-height] max-w-[--radix-popper-available-width]">
 		<ComboboxItem
 			v-for="(option, index) in items" :key="index"
 			class="group h-10 leading-none text-matisse-950 rounded flex items-center gap-2 px-3 py-2 relative select-none data-[disabled]:text-gray-600 data-[disabled]:pointer-events-none data-[highlighted]:outline-none data-[highlighted]:bg-matisse-700 data-[highlighted]:text-matisse-100"
