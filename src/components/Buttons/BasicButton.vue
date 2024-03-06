@@ -10,13 +10,13 @@ const { iconMode } = defineProps({
 </template>
 <style scoped>
 .button {
-	@apply px-3 py-2 flex items-center justify-center gap-2 rounded overflow-hidden bg-matisse-50 text-matisse-850 hover:bg-matisse-200 hover:text-matisse-900
+	@apply px-3 py-2 flex items-center justify-center gap-2 rounded overflow-hidden leading-none bg-matisse-50 text-matisse-850 hover:bg-matisse-200 hover:text-matisse-900
 }
 .button:disabled {
 	@apply bg-gray-600 text-gray-400 !important
 }
 .button.iconMode {
-	@apply p-3 rounded-full
+	@apply p-3 rounded-full h-[min-content] w-[min-content]
 }
 
 </style>
