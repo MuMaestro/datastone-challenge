@@ -43,12 +43,12 @@ Ainda na lista de usuários é possivel ver cada usuário, e algumas informaçõ
 Agora, na lista de Produtos, é possivel criar um produto, e novamente, um botão no topo da tela de criação de produto, permite gerar produtos rapidamente para testagem.
 
 ## Tecnologias usas
-Gerenciamento e persistência de dados - pinia, vueuse
-Base para componentes anatômicos - radix-vue
-Validação de dados - Zod, validatorjs, cpf-cnpj-validator
-Controle de inputs e forms - vee-validate
-Estilos - tailwind, postcess
-Utilitários - lodash, fakejs
+- Gerenciamento e persistência de dados - pinia, vueuse
+- Base para componentes anatômicos - radix-vue
+- Validação de dados - Zod, validatorjs, cpf-cnpj-validator
+- Controle de inputs e forms - vee-validate
+- Estilos - tailwind, postcess
+- Utilitários - lodash, fakejs
 
 ## Nota Técnica de Estrutura de Dados
 Como a descrição estava solta, é dada liberdade de construir como desejar o banco, decidi usar o email do usuário como chave primária, e o nome do produto como chave primária do produto.
