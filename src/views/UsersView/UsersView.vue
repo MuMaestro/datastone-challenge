@@ -23,38 +23,6 @@ console.log(userStore.usersList);
 					<UserTableItem v-for="user in userStore.usersList" :key="user.email" :user="user" />
 				</div>
 			</div>
-			<!-- <BasicButton icon-mode>
-				<GoogleIcon>
-					search
-				</GoogleIcon>
-			</BasicButton>
-			<BasicDialog>
-				<template v-slot:default>
-					<span>Alguma coisa</span>
-				</template>
-				<template v-slot:content>
-					conteudo complexo
-				</template>
-			</BasicDialog>
-			<div>parent bound v-model is: {{ value }}</div>
-			<TextInput aria-label="name" v-model="value" >
-				Nome
-			</TextInput>
-			<TextInput aria-label="email"  v-model="value"   >
-				Email
-			</TextInput>
-			<TextInput aria-label="cpf"  v-model="value"   >
-				Documento
-			</TextInput>
-			<TextInput aria-label="telefone"  v-model="value"   >
-				Telefone
-			</TextInput>
-			<div>
-				its: {{ ativo }}
-			</div>
-			<SwitchInput :id="'ativo'" v-model="ativo">
-				Ativo
-			</SwitchInput> -->
 		</div>
 	</main>
 </template>
