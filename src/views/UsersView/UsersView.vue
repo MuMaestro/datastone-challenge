@@ -8,7 +8,7 @@ console.log(userStore.usersList);
 
 <template>
 	<main>
-		<div class="fixed inset-0 w-full h-full flex flex-col items-center justify-center py-8 bg-gray-50">
+		<div class="fixed w-full h-full flex flex-col items-center justify-center py-8 bg-gray-50">
 			<div class="w-full max-w-[980px] h-full flex flex-col gap-8">
 				<div class="w-full flex gap-4">
 					<div class="w-full flex flex-col gap-1 px-6 py-4 rounded bg-matisse-100">
