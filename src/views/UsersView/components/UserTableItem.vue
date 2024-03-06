@@ -6,6 +6,7 @@ import { useUserProductsStore } from '@/stores/user-products';
 import { cnpj, cpf } from 'cpf-cnpj-validator';
 import { computed, ref } from 'vue';
 import CreateOrUpdateUserDialogTrigger from './CreateOrUpdateUserDialogTrigger.vue';
+import CreateOrUpdateUserRelationDialog from './CreateOrUpdateUserRelationDialog.vue';
 
 const { user } = defineProps<{
 	user: User
@@ -32,9 +33,16 @@ function handleDeleteUser() {
 			<span class="leading-none text-matisse-950">{{ documentProcessed }}</span>
 			<span class="leading-none text-matisse-400 text-sm">{{ user.document ? cpf.isValid(user.document) ? 'cpf' : 'cnpj' : '' }}</span>
 		</div>
-		<div class="flex flex-col gap-0.5">
-			<span class="leading-none text-matisse-950">{{ relations.ofUser(user.email).length ?? 0 }}</span>
-			<span class="leading-none text-matisse-400 text-sm">produtos</span>
+		<div class="flex gap-2">
+			<div class="flex flex-col gap-0.5">
+				<span class="leading-none text-matisse-950">{{ relations.ofUser(user.email).length ?? 0 }}</span>
+				<span class="leading-none text-matisse-400 text-sm">produtos</span>
+			</div>
+			<CreateOrUpdateUserRelationDialog :user="userMutable">
+				<BasicButton icon-mode class="!p-2 !bg-matisse-300">
+					<GoogleIcon :size="20" class="!text-matisse-600">visibility</GoogleIcon>
+				</BasicButton>
+			</CreateOrUpdateUserRelationDialog>
 		</div>
 		<div class="flex gap-1 items-center">
 			<div class="flex justify-center align-center p-1 rounded-full" :class="user.active ? 'bg-matisse-100' : 'bg-red-100'">

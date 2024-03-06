@@ -1,17 +1,17 @@
 <script setup lang="ts">
 import BasicButton from '@/components/Buttons/BasicButton.vue';
 import BasicDialog from '@/components/Dialogs/BasicDialog.vue';
+import GoogleIcon from '@/components/Icons/GoogleIcon.vue';
 import SwitchInput from '@/components/Inputs/SwitchInput.vue';
 import TextInput from '@/components/Inputs/TextInput.vue';
+import UserProductsInput from '@/views/UsersView/components/UserProductsInput.vue';
 import { useUserStore } from '@/stores/user';
+import { faker } from '@faker-js/faker';
 import { toTypedSchema } from '@vee-validate/zod';
 import { cnpj, cpf } from 'cpf-cnpj-validator';
-import { isEqual, keys } from 'lodash';
 import validator from 'validator';
 import { useForm } from 'vee-validate';
 import { z } from 'zod';
-import { faker } from '@faker-js/faker';
-import GoogleIcon from '@/components/Icons/GoogleIcon.vue';
 
 const UserSchema = z.object({
 	name: z.string({ required_error: 'Nome não pode estar vazio' }).min(3, { message: 'Minimo de 3 caracteres'}),
@@ -90,6 +90,7 @@ function handleGenerateRandomValues() {
 				<SwitchInput v-model="active" v-bind="activeAttrs">
 					Ativo
 				</SwitchInput>
+				<UserProductsInput :user="userModel" />
 				<div class="h-6">
 					<div class="text-red-600 h-0 w-full overflow-hidden transition-all transition-duration-[300]" 
 						:class="{ '!h-6': 
