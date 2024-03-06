@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import BasicButton from '@/components/Buttons/BasicButton.vue';
-import BasicDialog from '@/components/Dialogs/BasicDialog.vue';
 import GoogleIcon from '@/components/Icons/GoogleIcon.vue';
+import { useUserStore } from '@/stores/user';
 import { useUserProductsStore } from '@/stores/user-products';
 import { cnpj, cpf } from 'cpf-cnpj-validator';
 import { computed, ref } from 'vue';
 import CreateOrUpdateUserDialogTrigger from './CreateOrUpdateUserDialogTrigger.vue';
-import { useUserStore } from '@/stores/user';
 
 const { user } = defineProps<{
 	user: User
@@ -23,7 +22,7 @@ function handleDeleteUser() {
 }
 </script>
 <template>
-	<div class="grid grid-cols-[1fr_1fr_1fr_1fr_1fr_88px] grid-rows-[40px] items-center justify-center gap-2 px-4 py-3 rounded bg-gray-100">
+	<div class="grid grid-cols-[160px_1fr_140px_120px_110px_88px] grid-rows-[40px] items-center justify-center gap-2 px-4 py-3 rounded bg-gray-100">
 		<div class="flex flex-col gap-0.5">
 			<span class="leading-none text-matisse-950 w-full truncate ">{{ user?.name.split(' ')?.[0] }}</span>
 			<span class="leading-none text-matisse-400 text-sm w-full truncate">{{ user?.name.split(' ')?.slice(1).reduce((a, n) => `${a} ${n}`, '') }}</span>
