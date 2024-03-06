@@ -25,7 +25,7 @@ function handleDeleteProduct() {
 		</div>
 		<div class="flex flex-col gap-0.5">
 			<span class="leading-none text-matisse-950">{{ relations.ofProduct(product.name).length ?? 0 }}</span>
-			<span class="leading-none text-matisse-400 text-sm">produtos</span>
+			<span class="leading-none text-matisse-400 text-sm">ususários relacionados</span>
 		</div>
 		<div class="flex gap-1 items-center">
 			<div class="flex justify-center align-center p-1 rounded-full" :class="product.active ? 'bg-matisse-100' : 'bg-red-100'">
