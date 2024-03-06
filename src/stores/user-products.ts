@@ -32,8 +32,12 @@ export const useUserProductsStore = defineStore(STORE_NAME, () => {
 		const allRelationsOf = relationsOfUser(relations.value, email).map(({ productName }) => productName)
 		allRelationsOf.forEach((p) => deleteRelation({ productName: p, userEmail: email}))
 	}
+	function deleteAllRelationsOfProduct(name: string) {
+		const allRelationsOf = relationsOfProduct(relations.value, name).map(({ userEmail }) => userEmail)
+		allRelationsOf.forEach((u) => deleteRelation({ productName: name, userEmail: u}))
+	}
 	return {
-		relations, ofUser, ofProduct, upsertRelation, deleteRelation, deleteAllRelationsOfUser
+		relations, ofUser, ofProduct, upsertRelation, deleteRelation, deleteAllRelationsOfUser, deleteAllRelationsOfProduct
 	}
 });
 
