@@ -1,0 +1,11 @@
+version: '3.9'
+
+services:
+  vite:
+    image: datastone-vite/latest
+    container_name: datastone-vite
+    build:
+      context: ./
+      dockerfile: dockerfile
+    ports:
+      - "3000:3000"
