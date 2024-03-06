@@ -75,19 +75,19 @@ function handleGenerateRandomValues() {
 				<GoogleIcon>casino</GoogleIcon>
 			</BasicButton>
 			<form :onsubmit="onSubmit" class="flex flex-col gap-4">
-				<TextInput v-model="name" v-bind="activeAttrs">
+				<TextInput v-model="name" v-bind="nameAttrs">
 					Nome
 				</TextInput>
-				<TextInput v-model="email" v-bind="documentAttrs">
+				<TextInput v-model="email" v-bind="emailAttrs">
 					Email
 				</TextInput>
-				<TextInput v-model="document" v-bind="emailAttrs">
+				<TextInput v-model="document" v-bind="documentAttrs">
 					Documento
 				</TextInput>
-				<TextInput v-model="telephone" v-bind="nameAttrs">
+				<TextInput v-model="telephone" v-bind="telephoneAttrs">
 					Telefone
 				</TextInput>
-				<SwitchInput v-model="active" v-bind="telephoneAttrs">
+				<SwitchInput v-model="active" v-bind="activeAttrs">
 					Ativo
 				</SwitchInput>
 				<div class="h-6">
