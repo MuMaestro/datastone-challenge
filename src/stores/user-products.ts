@@ -28,8 +28,12 @@ export const useUserProductsStore = defineStore(STORE_NAME, () => {
 		relations.value = relations.value.filter((r) => !(r.productName === relation.productName && r.userEmail === relation.userEmail))
 		return relation;
 	}
+	function deleteAllRelationsOfUser(email: string) {
+		const allRelationsOf = relationsOfUser(relations.value, email).map(({ productName }) => productName)
+		allRelationsOf.forEach((p) => deleteRelation({ productName: p, userEmail: email}))
+	}
 	return {
-		relations, ofUser, ofProduct, upsertRelation, deleteRelation
+		relations, ofUser, ofProduct, upsertRelation, deleteRelation, deleteAllRelationsOfUser
 	}
 });
 

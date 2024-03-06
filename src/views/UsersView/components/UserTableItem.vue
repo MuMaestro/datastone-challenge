@@ -6,15 +6,21 @@ import { useUserProductsStore } from '@/stores/user-products';
 import { cnpj, cpf } from 'cpf-cnpj-validator';
 import { computed, ref } from 'vue';
 import CreateOrUpdateUserDialogTrigger from './CreateOrUpdateUserDialogTrigger.vue';
+import { useUserStore } from '@/stores/user';
 
 const { user } = defineProps<{
 	user: User
 }>();
 const userMutable = ref(user);
 const relations = useUserProductsStore();
+const userStore = useUserStore();
 const documentProcessed = computed(() => {
 	return user.document ? cpf.isValid(user.document) ? cpf.format(user.document) : cnpj.format(user.document) : 'sem documento';
 })
+function handleDeleteUser() {
+	userStore.deleteUser(user);
+	relations.deleteAllRelationsOfUser(user.email);
+}
 </script>
 <template>
 	<div class="grid grid-cols-[1fr_1fr_1fr_1fr_1fr_88px] grid-rows-[40px] items-center justify-center gap-2 px-4 py-3 rounded bg-gray-100">
@@ -44,7 +50,7 @@ const documentProcessed = computed(() => {
 					<GoogleIcon outlined :size="20" class="!text-matisse-100">edit</GoogleIcon>
 				</BasicButton>
 			</CreateOrUpdateUserDialogTrigger>
-			<BasicButton icon-mode class="!p-2 !bg-red-500 ">
+			<BasicButton icon-mode class="!p-2 !bg-red-500" :onclick="handleDeleteUser">
 				<GoogleIcon :size="20" class="!text-red-50">delete</GoogleIcon>
 			</BasicButton>
 		</div>
