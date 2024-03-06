@@ -1,5 +1,5 @@
-import ProductView from '@/views/ProductView.vue'
-import { UsersView } from '@/views/UsersView'
+import ProductView from '@/views/ProductView'
+import UsersView from '@/views/UsersView'
 import { createRouter, createWebHistory } from 'vue-router'
 
 const router = createRouter({
