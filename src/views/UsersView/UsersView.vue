@@ -19,7 +19,7 @@ console.log(userStore.usersList);
 						<CreateOrUpdateUserDialogTrigger />
 					</div>
 				</div>
-				<div class="flex flex-col gap-1">
+				<div class="flex flex-col h-full overflow-auto scroll-smooth gap-1">
 					<UserTableItem v-for="user in userStore.usersList" :key="user.email" :user="user" />
 				</div>
 			</div>
