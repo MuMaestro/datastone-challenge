@@ -50,15 +50,10 @@ Agora, na lista de Produtos, é possivel criar um produto, e novamente, um botã
 - Estilos - tailwind, postcess
 - Utilitários - lodash, fakejs
 
-## Nota Técnica de Estrutura de Dados
-Como a descrição estava solta, é dada liberdade de construir como desejar o banco, decidi usar o email do usuário como chave primária, e o nome do produto como chave primária do produto.
+## Nota sobre dados
+Ao invés de contruir uma API e instanciar através de docker, ou outro modo, decidi guardar os dados de forma persistente em `localStorage` de navegador, a fim de simplificar o desenvolvimento.
 
-Essa solução não é convencional, nem recomendada, no entando, permite uma rapida clonagem de entidades pelo front-end. A problematica so existe quando precisamos alterar o email de algum usuário, isso iria criar uma nova entidade, e manteria a antiga. Por isso, é necessário excluir a entidade do email antigo ao altera-lo.
-
-O mesmo segue para a ideia da chave primária de produto. Ao criá-lo, e associa-lo a usuários, cria-se uma relação com o nome. Ao alterar o nome de um produto, você estará criando um novo. É necessário reassociar cada usuário posteriormente aos usuários.
-
-### Trabalhos futuros de Estrutura
-Acrescentaria um gerdor de `uuid`, ao criar cada entidade, assim ficaria associada a edição ao uma unica entrada no banco.
+Se desejar trocar por uma api, somente o gerenciamento de estado seria necessário, com poucos ajustes na UI, desde que ele siga a mesma abstração que constiui o app.
 
 ## Nota Técnica sobre os visuais.
 O meu foco no projeto era ter uma aplicação minimamente apresentável, por este motivo não houve um enfoque em efeitos de animação nem em tornar muitos detalhes elegantes.
