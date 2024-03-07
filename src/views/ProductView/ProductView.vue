@@ -19,7 +19,7 @@ const productStore = useProductsStore();
 					</div>
 				</div>
 				<div class="flex flex-col h-full overflow-auto scroll-smooth gap-2 sm:gap-1">
-					<ProductTableItem v-for="product in productStore.productsList" :key="product.name" :product="product" />
+					<ProductTableItem v-for="product in productStore.productsList" :key="product.id" :product="product" />
 				</div>
 			</div>
 		</div>
