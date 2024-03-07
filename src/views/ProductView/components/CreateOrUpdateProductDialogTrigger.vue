@@ -7,10 +7,13 @@ import TextInput from '@/components/Inputs/TextInput.vue';
 import { useProductsStore } from '@/stores/products';
 import { faker } from '@faker-js/faker';
 import { toTypedSchema } from '@vee-validate/zod';
+import { v4 as uuid } from 'uuid';
 import { useForm } from 'vee-validate';
+import { watchEffect } from 'vue';
 import { z } from 'zod';
 
 const ProductSchema = z.object({
+	id: z.string().uuid(),
 	name: z.string({ required_error: 'Nome não pode estar vazio' }).min(3, { message: 'Minimo de 3 caracteres'}),
 	active: z.boolean().optional(),
 })
@@ -20,6 +23,14 @@ const [productModel] = defineModel<Product>({
 	default: {
 		active: true,
 		name: undefined,
+	}
+})
+watchEffect(() => {
+	if(!productModel.value.id) {
+		productModel.value = {
+			...productModel.value,
+			id: uuid(),
+		}
 	}
 })
 
@@ -37,6 +48,7 @@ const onSubmit = handleSubmit((values) => {
 
 function handleGenerateRandomValues() {
 	setValues({
+		id: uuid(),
 		active: faker.datatype.boolean(),
 		name: faker.commerce.product(),
 	})

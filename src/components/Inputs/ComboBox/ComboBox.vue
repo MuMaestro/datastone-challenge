@@ -3,18 +3,22 @@ import GoogleIcon from '@/components/Icons/GoogleIcon.vue';
 import { ComboboxAnchor, ComboboxContent, ComboboxEmpty, ComboboxGroup, ComboboxInput, ComboboxItem, ComboboxItemIndicator, ComboboxLabel, ComboboxRoot, ComboboxSeparator, ComboboxTrigger, ComboboxViewport } from 'radix-vue'
 import { ref } from 'vue';
 
+type ItemOption = string | {
+	key: string;
+	value: string;
+};
+
 const { placeholder, items } = defineProps<{
 	placeholder?: string,
-	items: string[]
+	items: ItemOption[]
 }>()
 
-// const value = ref<string[]>()
-const [value] = defineModel<string[]>()
+const [value] = defineModel<ItemOption[]>()
 
 </script>
 
 <template>
-  <ComboboxRoot v-model="value" class="relative" v-bind="{...$attrs}">
+  <ComboboxRoot v-model="value" class="relative" multiple v-bind="{...$attrs}">
     <ComboboxAnchor class="combobox-trigger">
       <ComboboxInput class="combobox-input" :placeholder="placeholder" />
       <ComboboxTrigger class="flex items-center">
@@ -27,12 +31,13 @@ const [value] = defineModel<string[]>()
     <ComboboxContent class="combobox-content">
       <ComboboxViewport class="p-2 max-h-[--radix-popper-available-height] max-w-[--radix-popper-available-width]">
 		<ComboboxItem
-			v-for="(option, index) in items" :key="index"
-			class="group h-10 leading-none text-matisse-950 rounded flex items-center gap-2 px-3 py-2 relative select-none data-[disabled]:text-gray-600 data-[disabled]:pointer-events-none data-[highlighted]:outline-none data-[highlighted]:bg-matisse-700 data-[highlighted]:text-matisse-100"
+			v-for="option in items" 
+			:key="typeof option === 'string' ? option : option.key"
 			:value="option"
+			class="group h-10 leading-none text-matisse-950 rounded flex items-center gap-2 px-3 py-2 relative select-none data-[disabled]:text-gray-600 data-[disabled]:pointer-events-none data-[highlighted]:outline-none data-[highlighted]:bg-matisse-700 data-[highlighted]:text-matisse-100"
 		>
 			<span class="w-full">
-				{{ option }}
+				{{ typeof option === 'string' ? option : option.value }}
 			</span>
 			<ComboboxItemIndicator
 				class="flex items-center justify-center"

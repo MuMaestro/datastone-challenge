@@ -5,36 +5,36 @@ import { computed } from 'vue';
 const STORE_NAME = 'user-products'
 type StoreState = UserProductRelation[];
 
-function relationsOfUser(relations: StoreState, email: string) {
-	return relations.filter(({ userEmail }) => email === userEmail);
+function relationsOfUser(relations: StoreState, id: string) {
+	return relations.filter(({ userId }) => id === userId);
 }
-function relationsOfProduct(relations: StoreState, name: string) {
-	return relations.filter(({ productName }) => name === productName);
+function relationsOfProduct(relations: StoreState, id: string) {
+	return relations.filter(({ productId }) => id === productId);
 }
 
 export const useUserProductsStore = defineStore(STORE_NAME, () => {
 	const relations: RemovableRef<StoreState> = useStorage(STORE_NAME, [])
-	const ofUser = computed(() => (email: string) => relationsOfUser(relations.value, email).map(({ productName }) => productName))
-	const ofProduct = computed(() => (name: string) => relationsOfProduct(relations.value, name).map(({ userEmail }) => userEmail))
+	const ofUser = computed(() => (id: string) => relationsOfUser(relations.value, id))
+	const ofProduct = computed(() => (id: string) => relationsOfProduct(relations.value, id))
 	function upsertRelation(relation: UserProductRelation) {
-		const { userEmail, productName } = relation;
-		if (relations.value.find(r => r.userEmail === userEmail && r.productName === productName)) {
+		const { userId, productId } = relation;
+		if (relations.value.find(r => r.userId === userId && r.productId === productId)) {
 			return relation;
 		}
 		relations.value.push(relation);
 		return relation;
 	}
 	function deleteRelation(relation: UserProductRelation) {
-		relations.value = relations.value.filter((r) => !(r.productName === relation.productName && r.userEmail === relation.userEmail))
+		relations.value = relations.value.filter((r) => !(r.productId === relation.productId && r.userId === relation.userId))
 		return relation;
 	}
-	function deleteAllRelationsOfUser(email: string) {
-		const allRelationsOf = relationsOfUser(relations.value, email).map(({ productName }) => productName)
-		allRelationsOf.forEach((p) => deleteRelation({ productName: p, userEmail: email}))
+	function deleteAllRelationsOfUser(id: string) {
+		const allRelationsOf = relationsOfUser(relations.value, id).map(({ productId }) => productId)
+		allRelationsOf.forEach((p) => deleteRelation({ productId: p, userId: id}))
 	}
-	function deleteAllRelationsOfProduct(name: string) {
-		const allRelationsOf = relationsOfProduct(relations.value, name).map(({ userEmail }) => userEmail)
-		allRelationsOf.forEach((u) => deleteRelation({ productName: name, userEmail: u}))
+	function deleteAllRelationsOfProduct(id: string) {
+		const allRelationsOf = relationsOfProduct(relations.value, id).map(({ userId }) => userId)
+		allRelationsOf.forEach((u) => deleteRelation({ productId: id, userId: u}))
 	}
 	return {
 		relations, ofUser, ofProduct, upsertRelation, deleteRelation, deleteAllRelationsOfUser, deleteAllRelationsOfProduct

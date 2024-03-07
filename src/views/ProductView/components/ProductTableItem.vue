@@ -14,7 +14,7 @@ const productStore = useProductsStore();
 const relations = useUserProductsStore();
 function handleDeleteProduct() {
 	productStore.deleteProduct(product);
-	relations.deleteAllRelationsOfProduct(product.name);
+	relations.deleteAllRelationsOfProduct(product.id);
 }
 </script>
 <template>
@@ -24,7 +24,7 @@ function handleDeleteProduct() {
 			<span class="leading-none text-matisse-400 text-sm w-full truncate">{{ product?.name.split(' ')?.slice(1).reduce((a, n) => `${a} ${n}`, '') }}</span>
 		</div>
 		<div class="flex flex-col gap-0.5 [grid-area:users] sm:[grid-area:unset]">
-			<span class="leading-none text-matisse-950">{{ relations.ofProduct(product.name).length ?? 0 }}</span>
+			<span class="leading-none text-matisse-950">{{ relations.ofProduct(product.id).length ?? 0 }}</span>
 			<span class="leading-none text-matisse-400 text-sm">ususários relacionados</span>
 		</div>
 		<div class="flex gap-1 items-center [grid-area:status] sm:[grid-area:unset]">

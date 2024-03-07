@@ -1,4 +1,4 @@
 type UserProductRelation = {
-	userEmail: string
-	productName: string
+	userId: string
+	productId: string
 }
