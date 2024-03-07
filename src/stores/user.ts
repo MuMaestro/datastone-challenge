@@ -9,11 +9,11 @@ export const useUserStore = defineStore(STORE_NAME, () => {
 	const users: RemovableRef<StoreState> = useStorage(STORE_NAME, {}); 
 	const usersList = computed(() => Object.keys(users.value).map((k) => users.value[k]))
 	function upsertUser(user: User) {
-		users.value[user.email] = user;
+		users.value[user.id] = user;
 		return user; 
 	}
 	function deleteUser(user: User) {
-		delete users.value[user.email]
+		delete users.value[user.id]
 		return user;
 	}
 	return {
