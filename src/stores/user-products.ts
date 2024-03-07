@@ -14,8 +14,8 @@ function relationsOfProduct(relations: StoreState, id: string) {
 
 export const useUserProductsStore = defineStore(STORE_NAME, () => {
 	const relations: RemovableRef<StoreState> = useStorage(STORE_NAME, [])
-	const ofUser = computed(() => (id: string) => relationsOfUser(relations.value, id).map(({ productId }) => productId))
-	const ofProduct = computed(() => (id: string) => relationsOfProduct(relations.value, id).map(({ userId }) => userId))
+	const ofUser = computed(() => (id: string) => relationsOfUser(relations.value, id))
+	const ofProduct = computed(() => (id: string) => relationsOfProduct(relations.value, id))
 	function upsertRelation(relation: UserProductRelation) {
 		const { userId, productId } = relation;
 		if (relations.value.find(r => r.userId === userId && r.productId === productId)) {
