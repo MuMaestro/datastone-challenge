@@ -13,9 +13,9 @@ const {user} = defineProps<{
 }>();
 const productStore = useProductsStore();
 const relationStore = useUserProductsStore();
-const userRelations = computed(() => relationStore.ofUser(user.email));
-function deleteRelation(productName: string) {
-	relationStore.deleteRelation({ productName, userEmail: user.email });
+const userRelations = computed(() => relationStore.ofUser(user.id));
+function deleteRelation(productId: string) {
+	relationStore.deleteRelation({ productId, userId: user.id });
 }
 function handleGenerateRandomValues() {
 	const selected = faker.helpers
@@ -23,7 +23,7 @@ function handleGenerateRandomValues() {
 			productStore.productsList.filter(p => p.active), 
 			faker.number.int({ max: productStore.productsList.length })
 		)
-	selected.forEach(p => relationStore.upsertRelation({ userEmail: user.email, productName: p.name }))
+	selected.forEach(p => relationStore.upsertRelation({ userId: user.id, productId: p.id }))
 }
 </script>
 <template>
@@ -40,9 +40,9 @@ function handleGenerateRandomValues() {
 			<div class="flex flex-col gap-4">
 				<UserProductsInput :user="user" />
 				<div class="grid grid-cols-[1fr] sm:grid-cols-[1fr_1fr] gap-3 min-h-[400px] max-h-[400px] w-full overflow-auto" style="grid-auto-rows: 56px;">
-					<div v-for="relation in userRelations" :key="relation" class="h-[56px] flex items-center justify-between gap-2 px-4 py-3 rounded justify-betweenbg-matisse-300 bg-matisse-200">
-						<span class="text-matisse-950 font-bold" >{{ relation }}</span> 
-						<BasicButton icon-mode class="!p-2 !bg-red-500" :onclick="() => deleteRelation(relation)">
+					<div v-for="relation in userRelations" :key="relation.productId" class="h-[56px] flex items-center justify-between gap-2 px-4 py-3 rounded justify-betweenbg-matisse-300 bg-matisse-200">
+						<span class="text-matisse-950 font-bold" >{{ productStore.products[relation.productId].name }}</span> 
+						<BasicButton icon-mode class="!p-2 !bg-red-500" :onclick="() => deleteRelation(relation.productId)">
 							<GoogleIcon :size="16" class="!text-red-50">delete</GoogleIcon>
 						</BasicButton>
 					</div>

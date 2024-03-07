@@ -5,44 +5,51 @@ import { useUserProductsStore } from '@/stores/user-products';
 import { compact } from 'lodash';
 import { computed, onUpdated, ref, watchEffect } from 'vue';
 
+function transformToComboboxOptions(relations: UserProductRelation[], products: Record<string, Product>): { key: string, value: string }[] {
+	const validRelations = relations.filter(r => !!r.productId);
+	const result = validRelations.map(r => ({ key: r.productId, value: products[r.productId].name }))
+	return result;
+}
+
 const { user } = defineProps<{
 	user: User
 }>();
 const productStore = useProductsStore();
 const relationStore = useUserProductsStore();
-const userRelations = computed(() => relationStore.ofUser(user.email));
-const productOptions = computed(() => {
+const products = computed(() => productStore.products);
+const userProductsRelations = computed(() => relationStore.ofUser(user.id));
+const productsAvaliable = computed(() => {
 	return productStore.productsList
-	.filter(p => p.active || userRelations.value.includes(p.name))
-	.map(p => p.name);
+		.filter(p => p.active || userProductsRelations.value.find((r) => r.productId === p.id))
+		.map(p => ({ key: p.id, value: p.name }))
 })
-const selectedRelations = ref<string[]>(userRelations.value);
-const selectedRelationsPlaceholder = computed(() => selectedRelations.value.reduce((a, s) => !a ? s : `${a}, ${s}`, ''))
+const selectedProducts = ref(transformToComboboxOptions(userProductsRelations.value, products.value));
+const selectedProductsPlaceholder = computed(() => selectedProducts.value.reduce((a, s) => !a ? s.value : `${a}, ${s.value}`, ''))
 const open = ref(false);
 relationStore.$onAction(({
 	store,
-	after
+	after,
 }) => {
 	after(() => {
-		selectedRelations.value = store.ofUser(user.email)
+		selectedProducts.value = transformToComboboxOptions(store.ofUser(user.id), products.value)
 	})
 })
 watchEffect(() => {
-	if(open.value) {
-		selectedRelations.value.forEach(v => {
-			relationStore.upsertRelation({ userEmail: user.email, productName: v });
+	if (open.value) {
+		selectedProducts.value.forEach(v => {
+			relationStore.upsertRelation({ userId: user.id, productId: v.key });
 		})
-		userRelations.value.forEach(v => {
-			if(!selectedRelations.value.includes(v)) {
-				relationStore.deleteRelation({ userEmail: user.email, productName: v })
+		userProductsRelations.value.forEach(v => {
+			if (!selectedProducts.value.find((r) => r.key === v.productId)) {
+				relationStore.deleteRelation({ userId: user.id, productId: v.productId })
 			}
 		})
-	} 
+	}
 })
 </script>
 <template>
 	<div class="flex flex-col gap-2">
 		<span class="font-sans text-matisse-800 ">Produtos</span>
-		<ComboBox v-model:open="open" :placeholder="selectedRelationsPlaceholder" multiple v-model="selectedRelations" :items="productOptions"></ComboBox>
+		<ComboBox v-model:open="open" :placeholder="selectedProductsPlaceholder" multiple v-model="selectedProducts" :items="productsAvaliable"></ComboBox>
 	</div>
 </template>

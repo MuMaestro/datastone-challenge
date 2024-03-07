@@ -3,7 +3,6 @@ import { useUserStore } from '@/stores/user';
 import CreateOrUpdateUserDialogTrigger from './components/CreateOrUpdateUserDialogTrigger.vue';
 import UserTableItem from './components/UserTableItem.vue';
 const userStore = useUserStore();
-console.log(userStore.usersList);
 </script>
 
 <template>
@@ -20,7 +19,7 @@ console.log(userStore.usersList);
 					</div>
 				</div>
 				<div class="flex flex-col h-full overflow-auto scroll-smooth gap-2 sm:gap-1">
-					<UserTableItem v-for="user in userStore.usersList" :key="user.email" :user="user" />
+					<UserTableItem v-for="user in userStore.usersList" :key="user.id" :user="user" />
 				</div>
 			</div>
 		</div>

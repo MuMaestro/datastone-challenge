@@ -19,7 +19,7 @@ const documentProcessed = computed(() => {
 })
 function handleDeleteUser() {
 	userStore.deleteUser(user);
-	relations.deleteAllRelationsOfUser(user.email);
+	relations.deleteAllRelationsOfUser(user.id);
 }
 </script>
 <template>
@@ -30,12 +30,14 @@ function handleDeleteUser() {
 		</div>
 		<div class="w-full truncate [grid-area:email] sm:[grid-area:unset]">{{ user?.email }}</div>
 		<div class="flex flex-col gap-0.5 [grid-area:doc] sm:[grid-area:unset]">
-			<span class="leading-none text-matisse-950">{{ documentProcessed }}</span>
+			<span class="leading-none text-matisse-950 sm:hidden">{{ documentProcessed.split('/')?.[0] }}/</span>
+			<span class="leading-none text-matisse-950 sm:hidden">{{ documentProcessed.split('/')?.slice(1)?.[0] }}</span>
+			<span class="leading-none text-matisse-950 hidden sm:block">{{ documentProcessed }}</span>
 			<span class="leading-none text-matisse-400 text-sm">{{ user.document ? cpf.isValid(user.document) ? 'cpf' : 'cnpj' : '' }}</span>
 		</div>
-		<div class="flex gap-2">
+		<div class="flex items-center gap-2">
 			<div class="flex flex-col gap-0.5 [grid-area:produtos] sm:[grid-area:unset]">
-				<span class="leading-none text-matisse-950">{{ relations.ofUser(user.email).length ?? 0 }}</span>
+				<span class="leading-none text-matisse-950">{{ relations.ofUser(user.id).length ?? 0 }}</span>
 				<span class="leading-none text-matisse-400 text-sm">produtos</span>
 			</div>
 			<CreateOrUpdateUserRelationDialog :user="userMutable">
@@ -71,7 +73,7 @@ function handleDeleteUser() {
 			"produtos status acoes" 40px / 1fr 1fr 120px;
 	@apply 
 		grid 
-		sm:[grid-template:40px/160px_1fr_140px_120px_110px_88px] 
-		items-center justify-center gap-2 px-4 py-3 rounded bg-gray-100
+		sm:[grid-template:40px/160px_1fr_150px_120px_110px_88px] 
+		items-center gap-2 px-4 py-3 rounded bg-gray-100
 }
 </style>

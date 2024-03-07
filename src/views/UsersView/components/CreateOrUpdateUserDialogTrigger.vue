@@ -4,16 +4,18 @@ import BasicDialog from '@/components/Dialogs/BasicDialog.vue';
 import GoogleIcon from '@/components/Icons/GoogleIcon.vue';
 import SwitchInput from '@/components/Inputs/SwitchInput.vue';
 import TextInput from '@/components/Inputs/TextInput.vue';
-import UserProductsInput from '@/views/UsersView/components/UserProductsInput.vue';
 import { useUserStore } from '@/stores/user';
+import UserProductsInput from '@/views/UsersView/components/UserProductsInput.vue';
 import { faker } from '@faker-js/faker';
 import { toTypedSchema } from '@vee-validate/zod';
 import { cnpj, cpf } from 'cpf-cnpj-validator';
+import { v4 as uuid } from 'uuid';
 import validator from 'validator';
 import { useForm } from 'vee-validate';
+import { watchEffect } from 'vue';
 import { z } from 'zod';
-
 const UserSchema = z.object({
+	id: z.string().uuid(),
 	name: z.string({ required_error: 'Nome não pode estar vazio' }).min(3, { message: 'Minimo de 3 caracteres'}),
 	email: z.string({ required_error: 'Email não pode estar vazio' }).email({ message: 'Email inválido'}),
 	document: z.string().optional().refine((arg) => !arg || (cpf.isValid(arg) || cnpj.isValid(arg)), {
@@ -37,6 +39,14 @@ const [userModel] = defineModel<User>({
 		telephone: undefined,
 	}
 })
+watchEffect(() => {
+	if (!userModel.value.id) {
+		userModel.value = {
+			...userModel.value,
+			id: uuid()
+		}
+	}
+})
 
 const { handleSubmit, errors, defineField, isFieldDirty, values, setValues } = useForm({
 	validationSchema: toTypedSchema(UserSchema),
@@ -55,6 +65,7 @@ const onSubmit = handleSubmit((values) => {
 
 function handleGenerateRandomValues() {
 	setValues({
+		id: uuid(),
 		active: faker.datatype.boolean(),
 		document: faker.datatype.boolean() ? cpf.generate(true) : cnpj.generate(true),
 		email: faker.internet.email(),
@@ -62,6 +73,7 @@ function handleGenerateRandomValues() {
 		telephone: faker.helpers.fromRegExp('554399[1-9]{7}'),
 	})
 }
+
 </script>
 <template>
 	<BasicDialog>
